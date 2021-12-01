@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <div id="main-div" className='App'>
-      <NetlifyIdentityContext url='https://ammonroberts-dgm3790project4.netlify.app/'>
+      <NetlifyIdentityContext url='https://ammonroberts-dgm3790finalproject.netlify.app/'>
         <CountryContextProvider>
           <NavMenu />
           <Suspense
