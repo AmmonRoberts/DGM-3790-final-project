@@ -1,12 +1,11 @@
+import Link from '@mui/material/Link';
+import { Box } from '@mui/system';
+import React, { useState } from 'react';
+import { useIdentityContext } from 'react-netlify-identity-gotrue';
+import { useHistory } from 'react-router-dom';
 import { useCountryContext } from '../Contexts/CountryContext';
 import CountryData from './CountryData';
-import { useState } from 'react';
-import React from 'react';
-import { Box } from '@mui/system';
-import Link from '@mui/material/Link';
 import SearchForm from './SearchForm';
-import { useIdentityContext } from 'react-netlify-identity-gotrue'
-import { useHistory } from 'react-router-dom'
 
 
 const CountryCards = (props) => {
@@ -14,11 +13,8 @@ const CountryCards = (props) => {
     const history = useHistory()
 
     const CountriesJson = useCountryContext();
-    // This is the problem with resetting the search string
-    // const [searchString, setSearchString] = useState(null);
     const [filteredRegion, setFilteredRegion] = useState("None");
     const filterRegionChangeHandler = (event) => {
-        // setSearchString(null);
         if (event.target.value === "None") {
             setFilteredRegion("None");
         }
@@ -39,23 +35,6 @@ const CountryCards = (props) => {
         }
     })
 
-    const createRow = () => {
-        let rows = [];
-        let counter = 1;
-        filteredCountries.forEach((item, index) => {
-            rows[counter] = rows[counter] ? [...rows[counter]] : [];
-            if (index % 3 === 0 && index !== 0) {
-                counter++;
-                rows[counter] = rows[counter] ? [...rows[counter]] : [];
-                rows[counter].push(item);
-            } else {
-                rows[counter].push(item);
-            }
-        });
-
-        return rows;
-    }
-
     const style = {
         position: 'absolute',
         top: '50%',
@@ -72,6 +51,9 @@ const CountryCards = (props) => {
         history.push(`/${choice}`)
     }
 
+    let i = 0;
+    let j = 0;
+
     return (
         <div className="container">
             {identity.user && (
@@ -83,18 +65,16 @@ const CountryCards = (props) => {
                         filteredRegion={filteredRegion}
                         filteredCountries={filteredCountries}
                     />
-                    {createRow().map((row) => {
-                        return (
-                            <div className="row">
-                                {
-                                    row.map((country) => {
-                                        return (<CountryData
-                                            country={country} />);
-                                    })
-                                }
-                            </div>
-                        )
-                    })}
+                    {
+                        <div className="row" key={`row${i += 1}`}>
+                            {
+                                filteredCountries.map((country) => {
+                                    return (<CountryData key={`card${j += 1}`}
+                                        country={country} />);
+                                })
+                            }
+                        </div>
+                    })
                 </>
             )}
             {!identity.provisionalUser && !identity.user && (

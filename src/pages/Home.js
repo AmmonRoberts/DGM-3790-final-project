@@ -1,10 +1,17 @@
-import React from 'react';
+import Link from '@mui/material/Link';
 import { Box } from '@mui/system';
-import { useIdentityContext } from 'react-netlify-identity-gotrue'
+import React from 'react';
+import { useIdentityContext } from 'react-netlify-identity-gotrue';
+import { useHistory } from 'react-router-dom';
+
 
 const Home = () => {
     const identity = useIdentityContext()
+    const history = useHistory()
 
+    const handleNavChoice = (choice) => {
+        history.push(`/${choice}`)
+    }
 
     const style = {
         position: 'absolute',
@@ -21,7 +28,15 @@ const Home = () => {
     return (
         <Box sx={style}>
             {!identity.provisionalUser && !identity.user && (
-                <h1>Welcome! Please login or sign up to continue.</h1>
+                <h1>Welcome! Please
+                    <Link onClick={() => handleNavChoice('login', false)}>
+                        {' '}log in{' '}
+                    </Link>
+                    or
+                    <Link
+                        onClick={() => handleNavChoice('signup', false)}>
+                        {' '}sign up{' '} </Link>
+                    to continue.</h1>
             )}
 
             {identity.provisionalUser && (

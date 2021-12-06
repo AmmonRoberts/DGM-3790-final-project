@@ -1,16 +1,16 @@
-import './Styles/App.css';
-import { Router, Route, Switch } from 'react-router-dom'
-import { CountryContextProvider } from './Contexts/CountryContext'
-import React, { Suspense } from 'react'
-import Home from './pages/Home';
-import Login from './pages/Login'
-import Signup from './pages/Signup';
-import NotFound from './pages/NotFound'
-import MyCountryModal from './components/MyCountryModal';
-import NetlifyIdentityContext from 'react-netlify-identity-gotrue'
-import { Box } from '@mui/material'
-import Spinner from './components/Spinner';
+import { Box } from '@mui/material';
+import React, { Suspense } from 'react';
+import NetlifyIdentityContext from 'react-netlify-identity-gotrue';
+import { Route, Switch } from 'react-router-dom';
+import CountryData from './components/CountryData';
 import NavMenu from './components/nav/NavMenu';
+import Spinner from './components/Spinner';
+import { CountryContextProvider } from './Contexts/CountryContext';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
+import Signup from './pages/Signup';
+import './Styles/App.css';
 
 const CountryCards = React.lazy(() => import('./components/CountryCards'))
 
@@ -40,11 +40,11 @@ const App = () => {
               <Route path="/" exact>
                 <Home />
               </Route>
-              <Route path="/countries">
+              <Route path="/countries" exact>
                 <CountryCards />
               </Route>
-              <Route path="/countries/:countryId" exact>
-                <MyCountryModal />
+              <Route path="/countries/:countryId">
+                <CountryData />
               </Route>
               <Route path="/login">
                 <Login />

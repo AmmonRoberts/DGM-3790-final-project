@@ -22,7 +22,6 @@ const NavMenu = () => {
     const [isOpen, setIsOpen] = React.useState(false)
 
     const toggleDrawer = () => {
-        console.log(identity.user, identity.provisionalUser)
         setIsOpen(!isOpen)
     }
 

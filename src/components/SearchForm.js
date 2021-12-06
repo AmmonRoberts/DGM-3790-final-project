@@ -8,8 +8,9 @@ import FancySearch from './FancySearch';
 const SearchForm = (props) => {
     const regionFilterOptions = [...new Set(props.CountriesJson.map(item => item.region))];
 
-    return (
 
+
+    return (
         <FormControl variant="filled" >
             <InputLabel id="simple-select-outlined-label">Region</InputLabel>
             <Select
@@ -21,20 +22,18 @@ const SearchForm = (props) => {
                 <MenuItem value="None">
                     <em>None</em>
                 </MenuItem>
-                {regionFilterOptions.sort().map((region, index) =>
+                {regionFilterOptions.sort().map((region) =>
                     <MenuItem
-                        key={index}
+                        key={`${region}Key`}
                         value={region === "" ? "N/A" : region}
-                        primaryText={region === "" ? "N/A" : region}>
+                    >
                         <em>{
                             region === "" ? "N/A" : region}
                         </em>
                     </MenuItem>
                 )}
             </Select>
-            <FancySearch countries={props.filteredCountries}
-            // searchString={searchString} 
-            />
+            <FancySearch countries={props.filteredCountries} />
         </FormControl>
     );
 }

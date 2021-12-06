@@ -3,11 +3,21 @@ import Autocomplete from '@mui/material/Autocomplete';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import React from 'react';
-// import { useState } from 'react';
-// import MyModal from './MyModal';
+import { useHistory } from "react-router-dom";
+
 
 
 const FancySearch = (props) => {
+    const history = useHistory();
+
+    const onChanged = (event) => {
+        const id = event.target.getAttribute('data-countryid')
+        console.log(event.target)
+        if (id !== null) {
+            history.push(`/countries/${id}`);
+        }
+    }
+
     return (
         <Autocomplete
             id="country-search"
@@ -18,22 +28,23 @@ const FancySearch = (props) => {
                 <TextField {...params}
                     label="Countries" margin="normal" />
             )}
+            onChange={onChanged}
             renderOption={(props, country, { inputValue }) => {
                 const matches = match(country.name, inputValue);
                 const parts = parse(country.name, matches);
 
                 return (
-                    <li {...props}>
+                    <li
+                        data-countryid={country.id}
+                        {...props}>
                         <div>
-                            {parts.map((part, index) => (
+                            {parts.map((part) => (
                                 <span
-                                    // onClick={handleOpen}
-                                    key={index}
+                                    key={`${country.id}`}
                                     style={{
                                         fontWeight: part.highlight ? 700 : 400,
                                     }}>
                                     {part.text}
-                                    {/* <MyModal openState={open} handleClose={handleClose} country={option} /> */}
                                 </span>
                             ))}
                         </div>

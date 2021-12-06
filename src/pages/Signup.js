@@ -1,9 +1,9 @@
+import { Box, Button, TextField } from '@mui/material';
+import { Formik } from 'formik';
 import React from 'react';
-import { Box, Button, TextField } from '@mui/material'
-import { Formik } from 'formik'
-import * as Yup from 'yup'
-import { useHistory } from 'react-router-dom'
-import { useIdentityContext } from 'react-netlify-identity-gotrue'
+import { useIdentityContext } from 'react-netlify-identity-gotrue';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const style = {
     position: 'absolute',
@@ -54,7 +54,6 @@ const Signup = (props) => {
                         }
                         ).then(() => {
                             handleClose()
-                            console.log('Successfully submitted!')
                         })
                     } catch (err) {
                         console.error(err)

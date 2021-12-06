@@ -1,12 +1,11 @@
-import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Fade from '@mui/material/Fade';
+import Modal from '@mui/material/Modal';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import Translations from './Translations';
 
 const MyCountryModal = (props) => {
-
     const useStyles = makeStyles((theme) => ({
         modal: {
             display: 'flex',
@@ -40,7 +39,9 @@ const MyCountryModal = (props) => {
             <Fade in={props.openState}>
                 <div className={classes.paper}>
                     <h2 id="transition-modal-title"> {props.country.name}</h2>
-                    <p><img src={`https://flagcdn.com/h40/${props.country.iso2.toLowerCase()}.png`} alt={`${props.country.name} flag`} /></p>
+                    <p>
+                        <img src={`https://flagcdn.com/h40/${props.country.iso2.toLowerCase()}.png`} alt={`${props.country.name} flag`} />
+                    </p>
                     <h4 className={classes.language_list}>Translations:</h4>
                     <Translations translations={props.country.translations} />
                 </div>
