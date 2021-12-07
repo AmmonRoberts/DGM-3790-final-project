@@ -14,7 +14,6 @@ export const CountryContextProvider = (props) => {
   useEffect(() => {
     const fetchCountries = async () => {
       const URL = `/.netlify/functions/countries`
-
       try {
         const response = await axios.get(URL)
         const countries = await response.data

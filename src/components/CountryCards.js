@@ -66,7 +66,7 @@ const CountryCards = (props) => {
                         filteredCountries={filteredCountries}
                     />
                     {
-                        <div className="row" key={`row${i += 1}`}>
+                        <div className="row">
                             {
                                 filteredCountries.map((country) => {
                                     return (<CountryData key={`card${j += 1}`}

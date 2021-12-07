@@ -12,7 +12,6 @@ const FancySearch = (props) => {
 
     const onChanged = (event) => {
         const id = event.target.getAttribute('data-countryid')
-        console.log(event.target)
         if (id !== null) {
             history.push(`/countries/${id}`);
         }
