@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import React, { Suspense } from 'react';
 import NetlifyIdentityContext from 'react-netlify-identity-gotrue';
-import { Route, Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
 import CountryData from './components/CountryData';
 import NavMenu from './components/nav/NavMenu';
 import Spinner from './components/Spinner';
@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Signup from './pages/Signup';
 import './Styles/App.css';
+import SlideRoutes from 'react-slide-routes';
 
 const CountryCards = React.lazy(() => import('./components/CountryCards'))
 
@@ -36,14 +37,15 @@ const App = () => {
               </Box>
             }
           >
-            <Routes>
+            <SlideRoutes>
               <Route path="/" element={<Home />} exact />
               <Route path="/countries" element={<CountryCards />} exact />
+              <Route path="/favorites" element={<Favorites />} exact />
               <Route path="/countries/:countryId" element={<CountryData />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>
+            </SlideRoutes>
           </Suspense>
         </CountryContextProvider>
       </NetlifyIdentityContext>
