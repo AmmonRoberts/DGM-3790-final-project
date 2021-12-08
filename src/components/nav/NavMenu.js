@@ -3,10 +3,9 @@ import HomeIcon from '@mui/icons-material/Home'
 import LoginIcon from '@mui/icons-material/Login'
 import MenuIcon from '@mui/icons-material/Menu'
 import PublicIcon from '@mui/icons-material/Public'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {
-    Avatar, Drawer, List, ListItem, ListItemIcon,
-    ListItemText,
-    Tooltip
+    Avatar, Drawer, List, ListItem, ListItemIcon, ListItemText, Tooltip
 } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -14,10 +13,10 @@ import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import * as React from 'react'
 import { useIdentityContext } from 'react-netlify-identity-gotrue'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const NavMenu = () => {
-    const history = useHistory()
+    const navigate = useNavigate()
     const identity = useIdentityContext()
     const [isOpen, setIsOpen] = React.useState(false)
 
@@ -26,7 +25,7 @@ const NavMenu = () => {
     }
 
     const handleNavChoice = (choice, shouldToggle) => {
-        history.push(`/${choice}`)
+        navigate(`/${choice}`)
         if (shouldToggle) toggleDrawer()
     }
 
@@ -38,6 +37,12 @@ const NavMenu = () => {
                         <PublicIcon />
                     </ListItemIcon>
                     <ListItemText primary="Countries" />
+                </ListItem>
+                <ListItem button onClick={() => handleNavChoice('favorites', true)}>
+                    <ListItemIcon>
+                        <FavoriteBorderIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Favorites" />
                 </ListItem>
             </List>
         </Box>

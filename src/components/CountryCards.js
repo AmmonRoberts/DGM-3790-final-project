@@ -2,7 +2,7 @@ import Link from '@mui/material/Link';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { useIdentityContext } from 'react-netlify-identity-gotrue';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useCountryContext } from '../Contexts/CountryContext';
 import CountryData from './CountryData';
 import SearchForm from './SearchForm';
@@ -10,7 +10,7 @@ import SearchForm from './SearchForm';
 
 const CountryCards = (props) => {
     const identity = useIdentityContext()
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const CountriesJson = useCountryContext();
     const [filteredRegion, setFilteredRegion] = useState("None");
@@ -47,12 +47,15 @@ const CountryCards = (props) => {
         p: 4,
     }
 
+    const linkStyle = {
+        cursor: "pointer"
+    }
+
     const handleNavChoice = (choice) => {
-        history.push(`/${choice}`)
+        navigate(`/${choice}`)
     }
 
     let i = 0;
-    let j = 0;
 
     return (
         <div className="container">
@@ -69,7 +72,7 @@ const CountryCards = (props) => {
                         <div className="row">
                             {
                                 filteredCountries.map((country) => {
-                                    return (<CountryData key={`card${j += 1}`}
+                                    return (<CountryData key={`card${i += 1}`}
                                         country={country} />);
                                 })
                             }
@@ -79,7 +82,7 @@ const CountryCards = (props) => {
             )}
             {!identity.provisionalUser && !identity.user && (
                 <Box sx={style}>
-                    <h1>You need to be <Link
+                    <h1>You need to be <Link sx={linkStyle}
                         onClick={() => handleNavChoice('login', false)}>
                         logged in </Link>
                         to view this page!</h1>

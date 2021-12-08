@@ -3,17 +3,17 @@ import Autocomplete from '@mui/material/Autocomplete';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import React from 'react';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 
 const FancySearch = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const onChanged = (event) => {
         const id = event.target.getAttribute('data-countryid')
         if (id !== null) {
-            history.push(`/countries/${id}`);
+            navigate(`/countries/${id}`);
         }
     }
 

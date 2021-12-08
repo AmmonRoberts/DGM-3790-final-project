@@ -1,12 +1,13 @@
 import { Box } from '@mui/material';
 import React, { Suspense } from 'react';
 import NetlifyIdentityContext from 'react-netlify-identity-gotrue';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 import CountryData from './components/CountryData';
 import NavMenu from './components/nav/NavMenu';
 import Spinner from './components/Spinner';
 import { CountryContextProvider } from './Contexts/CountryContext';
 import Home from './pages/Home';
+import Favorites from './pages/Favorites';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Signup from './pages/Signup';
@@ -23,7 +24,6 @@ const style = {
 
 
 const App = () => {
-
   return (
     <div id="main-div" className='App'>
       <NetlifyIdentityContext url='https://ammonroberts-dgm3790finalproject.netlify.app/'>
@@ -36,30 +36,18 @@ const App = () => {
               </Box>
             }
           >
-            <Switch>
-              <Route path="/" exact>
-                <Home />
-              </Route>
-              <Route path="/countries" exact>
-                <CountryCards />
-              </Route>
-              <Route path="/countries/:countryId">
-                <CountryData />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/signup">
-                <Signup />
-              </Route>
-              <Route path="*">
-                <NotFound />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route path="/" element={<Home />} exact />
+              <Route path="/countries" element={<CountryCards />} exact />
+              <Route path="/countries/:countryId" element={<CountryData />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </Suspense>
         </CountryContextProvider>
       </NetlifyIdentityContext>
-    </div>
+    </div >
   );
 }
 

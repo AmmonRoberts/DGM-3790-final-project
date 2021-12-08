@@ -2,15 +2,15 @@ import Link from '@mui/material/Link';
 import { Box } from '@mui/system';
 import React from 'react';
 import { useIdentityContext } from 'react-netlify-identity-gotrue';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
     const identity = useIdentityContext()
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const handleNavChoice = (choice) => {
-        history.push(`/${choice}`)
+        navigate(`/${choice}`)
     }
 
     const style = {
@@ -25,15 +25,20 @@ const Home = () => {
         p: 4,
     }
 
+    const linkStyle = {
+        cursor: "pointer"
+    }
+
     return (
         <Box sx={style}>
             {!identity.provisionalUser && !identity.user && (
                 <h1>Welcome! Please
-                    <Link onClick={() => handleNavChoice('login', false)}>
+                    <Link sx={linkStyle}
+                        onClick={() => handleNavChoice('login', false)}>
                         {' '}log in{' '}
                     </Link>
                     or
-                    <Link
+                    <Link sx={linkStyle}
                         onClick={() => handleNavChoice('signup', false)}>
                         {' '}sign up{' '} </Link>
                     to continue.</h1>
