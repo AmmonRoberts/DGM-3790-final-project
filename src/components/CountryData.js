@@ -63,8 +63,13 @@ const CountryData = (props) => {
 
     const [open, setOpen] = useState(false);
 
-    const handleOpen = () => {
-        setOpen(true);
+    const handleOpen = (event) => {
+        // Seriously, this is the dumbest thing... 
+        // It feels so hacky and takes forever to actually change the state, 
+        // but whatever, I guess...
+        // I don't have the time to figure out a better way to 
+        if (event.target.nodeName !== 'path')
+            setOpen(true);
     };
 
     const handleClose = () => {
@@ -83,7 +88,7 @@ const CountryData = (props) => {
                     <p>{country.subregion === "" ? "N/A" : country.subregion}, {country.region === "" ? "N/A" : country.region}</p>
                     <p><LocationCityIcon />{country.capital}</p>
                     <p><MoneyIcon />{country.currency_symbol} ({country.currency})</p>
-                    <p><IconButton sx={{ p: 0, m: 0 }} onClick={handleFavoriteClick}>
+                    <p><IconButton className="favoriteIcon" sx={{ p: 0, m: 0 }} onClick={handleFavoriteClick}>
                         <FavoriteIcon sx={{ color: favorite ? '#F00' : '#000' }} />
                     </IconButton></p>
                 </Card>

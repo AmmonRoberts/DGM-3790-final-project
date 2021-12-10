@@ -52,9 +52,7 @@ const Favorites = () => {
                         to view this page!</h1>
                 </Box>
             )}
-
-
-            {favorites !== [] && (
+            {favorites.length > 0 && (
                 <div className="row">{
 
                     matchedFavorites.map((country) => {
@@ -64,12 +62,12 @@ const Favorites = () => {
                 </div>
 
             )}
-
-            {favorites === [] && (
+            {identity.user && favorites.length === 0 && (
                 <Box sx={style}>
-                    <h1>Empty</h1>
+                    <h1>You have no favorites!</h1>
                 </Box>
             )}
+
         </div>
     )
 }
