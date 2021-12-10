@@ -1,17 +1,28 @@
 import Link from '@mui/material/Link';
 import { Box } from '@mui/system';
-import React from 'react';
+import CountryData from '../components/CountryData';
+import React, { useEffect } from 'react';
 import { useIdentityContext } from 'react-netlify-identity-gotrue';
+import { useCountryContext } from '../Contexts/CountryContext';
 import { useNavigate } from 'react-router-dom';
 
 
 const Favorites = () => {
     const identity = useIdentityContext()
+    const [matchedFavorites, setMatchedFavorites] = React.useState([])
+    const { CountriesJson, favorites } = useCountryContext();
     const navigate = useNavigate()
 
     const handleNavChoice = (choice) => {
         navigate(`/${choice}`)
     }
+
+    useEffect(() => {
+        setMatchedFavorites(() => {
+            const matches = CountriesJson.filter((country) => favorites.includes(country.id))
+            return [...matches]
+        })
+    }, [favorites, CountriesJson])
 
     const style = {
         position: 'absolute',
@@ -29,29 +40,37 @@ const Favorites = () => {
         cursor: "pointer"
     }
 
+    let i = 0;
+
     return (
-        <Box sx={style}>
-            {!identity.provisionalUser && !identity.user && (
-                <h1>Welcome! Please
-                    <Link sx={linkStyle}
+        <div className="container">
+            {!identity.user && (
+                <Box sx={style}>
+                    <h1>You need to be <Link sx={linkStyle}
                         onClick={() => handleNavChoice('login', false)}>
-                        {' '}log in{' '}
-                    </Link>
-                    or
-                    <Link sx={linkStyle}
-                        onClick={() => handleNavChoice('signup', false)}>
-                        {' '}sign up{' '} </Link>
-                    to continue.</h1>
+                        logged in </Link>
+                        to view this page!</h1>
+                </Box>
             )}
 
-            {identity.provisionalUser && (
-                <h1>Thanks for signing up! Check your email to confirm.</h1>
+
+            {favorites !== [] && (
+                <div className="row">{
+
+                    matchedFavorites.map((country) => {
+                        return (<CountryData key={`card${i += 1}`}
+                            country={country} />);
+                    })}
+                </div>
+
             )}
 
-            {identity.user && (
-                <h1>Welcome back, {identity.user.user_metadata?.full_name}!</h1>
+            {favorites === [] && (
+                <Box sx={style}>
+                    <h1>Empty</h1>
+                </Box>
             )}
-        </Box>
+        </div>
     )
 }
 

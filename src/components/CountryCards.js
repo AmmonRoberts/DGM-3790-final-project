@@ -12,7 +12,7 @@ const CountryCards = (props) => {
     const identity = useIdentityContext()
     const navigate = useNavigate()
 
-    const CountriesJson = useCountryContext();
+    const { CountriesJson } = useCountryContext();
     const [filteredRegion, setFilteredRegion] = useState("None");
     const filterRegionChangeHandler = (event) => {
         if (event.target.value === "None") {

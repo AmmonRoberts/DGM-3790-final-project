@@ -1,17 +1,18 @@
-import { useCountryContext } from '../Contexts/CountryContext';
-import { useParams } from 'react-router-dom';
-import { Card } from '@mui/material';
-import MoneyIcon from '@mui/icons-material/Money';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
-import MyCountryModal from "./MyCountryModal";
-import React from 'react';
-import { useState } from 'react';
+import MoneyIcon from '@mui/icons-material/Money';
+import { Card } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { makeStyles } from '@mui/styles';
-import NotFound from '../pages/NotFound'
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useCountryContext } from '../Contexts/CountryContext';
+import NotFound from '../pages/NotFound';
+import MyCountryModal from "./MyCountryModal";
 
 
 const CountryData = (props) => {
-    const CountriesJson = useCountryContext();
+    const { CountriesJson } = useCountryContext();
     const params = useParams();
     let country = {}
 
@@ -50,6 +51,16 @@ const CountryData = (props) => {
 
     const classes = useStyles();
 
+    const { favorites, updateFavorites } = useCountryContext()
+    const [favorite, setFavorite] = useState(false)
+    const handleFavoriteClick = () => {
+        updateFavorites(country)
+    }
+
+    useEffect(() => {
+        favorites.includes(country.id) ? setFavorite(true) : setFavorite(false)
+    }, [country.id, favorites])
+
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -72,6 +83,9 @@ const CountryData = (props) => {
                     <p>{country.subregion === "" ? "N/A" : country.subregion}, {country.region === "" ? "N/A" : country.region}</p>
                     <p><LocationCityIcon />{country.capital}</p>
                     <p><MoneyIcon />{country.currency_symbol} ({country.currency})</p>
+                    <p><IconButton sx={{ p: 0, m: 0 }} onClick={handleFavoriteClick}>
+                        <FavoriteIcon sx={{ color: favorite ? '#F00' : '#000' }} />
+                    </IconButton></p>
                 </Card>
                     <MyCountryModal openState={open} handleClose={handleClose} country={country} />
                 </>

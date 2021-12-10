@@ -8,8 +8,19 @@ const CountryContext = createContext({
 })
 
 export const CountryContextProvider = (props) => {
-  const [countries, setCountries] = useState([])
+  const [CountriesJson, setCountries] = useState([])
   const [isLoading, setLoading] = useState(true)
+  const [favorites, setFavorites] = useState([])
+
+  const updateFavorites = (country) => {
+    if (!favorites.includes(country.id)) {
+      setFavorites((prevState) => [...prevState, country.id])
+    } else {
+      setFavorites(() => {
+        return favorites.filter((item) => item !== country.id)
+      })
+    }
+  }
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -29,7 +40,7 @@ export const CountryContextProvider = (props) => {
   }, [])
 
   return isLoading ? (<Spinner />) : (
-    <CountryContext.Provider value={countries} isLoading={isLoading}>
+    <CountryContext.Provider value={{ CountriesJson, favorites, updateFavorites }} updateFavorites={updateFavorites} isLoading={isLoading}>
       {props.children}
     </CountryContext.Provider>
   )
