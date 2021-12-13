@@ -28,7 +28,8 @@ const CountryData = (props) => {
         countryCard: {
             width: '15em',
             margin: 'auto',
-            padding: '.5em'
+            padding: '.5em',
+
         },
         countryData: {
             height: '200px',
@@ -45,6 +46,9 @@ const CountryData = (props) => {
                 fontSize: '18px',
                 display: 'flex',
                 justifyContent: 'flex-start'
+            },
+            "&:hover": {
+                backgroundColor: "#f5f1f1"
             }
         },
     }));
